@@ -59,15 +59,19 @@
   </form>
 </template>
 <script>
-import Textinput from '@/components/Textinput';
-import config from '../../../config';
-import apiClients from '../../../utils/apiClients';
-import { setAccessToken, setRefreshToken, setActiveUser } from '../../../utils/utils';
-import { useField, useForm } from 'vee-validate';
-import * as yup from 'yup';
+import Textinput from "@/components/Textinput";
+import config from "../../../config";
+import apiClients from "../../../utils/apiClients";
+import {
+  setAccessToken,
+  setRefreshToken,
+  setActiveUser,
+} from "../../../utils/utils";
+import { useField, useForm } from "vee-validate";
+import * as yup from "yup";
 
-import { useRouter } from 'vue-router';
-import { useToast } from 'vue-toastification';
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
 
 export default {
   components: {
@@ -81,16 +85,16 @@ export default {
   setup() {
     // Define a validation schema
     const schema = yup.object({
-      email: yup.string().required('Email is required').email(),
-      password: yup.string().required('Password is required').min(8),
+      email: yup.string().required("Email is required").email(),
+      password: yup.string().required("Password is required").min(8),
     });
 
     const toast = useToast();
     const router = useRouter();
 
     const formValues = {
-      email: 'jml-rewards@gmail.com',
-      password: 'jml-rewards1',
+      email: "Ab1@mail.com",
+      password: "brand1111",
     };
 
     const { handleSubmit } = useForm({
@@ -99,28 +103,33 @@ export default {
     });
     // No need to define rules for fields
 
-    const { value: email, errorMessage: emailError } = useField('email');
+    const { value: email, errorMessage: emailError } = useField("email");
     const { value: password, errorMessage: passwordError } =
-      useField('password');
+      useField("password");
 
     const onSubmit = handleSubmit(async (values) => {
-      const url = config.apiUrl + 'auth/login';
+      const url = config.apiUrl + "auth/login";
       const body = { userId: values.email, password: values.password };
       const hasAuth = false;
 
       const response = await apiClients.post(url, body, hasAuth);
-      console.log()
-      if (!response.success || response?.data?.user?.role != 'admin')
-        return toast.error(' Email or Password is incorrect ', {
+
+      if (
+        response?.data?.user?.role === "admin" ||
+        response?.data?.user?.role === "vendor"
+      ) {
+        setAccessToken(JSON.stringify(response?.data?.tokens?.access));
+        setRefreshToken(JSON.stringify(response?.data?.tokens?.refresh));
+        setActiveUser(JSON.stringify(response?.data?.user));
+        router.push("/app/home");
+        toast.success(" Login  successfully", {
           timeout: 2000,
         });
-      setAccessToken(JSON.stringify(response?.data?.tokens?.access));
-      setRefreshToken(JSON.stringify(response?.data?.tokens?.refresh))
-      setActiveUser(JSON.stringify(response?.data?.user));
-      router.push('/app/home');
-      toast.success(' Login  successfully', {
-        timeout: 2000,
-      });
+      } else {
+        return toast.error(" Email or Password is incorrect ", {
+          timeout: 2000,
+        });
+      }
     });
 
     return {

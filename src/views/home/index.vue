@@ -674,6 +674,12 @@ export default {
           bg: "bg-[#E5F9FF] dark:bg-slate-900	",
         },
         {
+          name: shapeLine2,
+          title: "Loan",
+          count: this.kpis.totalUsers,
+          bg: "bg-[#E5F9FF] dark:bg-slate-900	",
+        },
+        {
           name: shapeLine1,
           title: "Revenue",
           count: this.kpis.totalRevenue,
@@ -682,6 +688,18 @@ export default {
         {
           name: shapeLine2,
           title: "Vendors",
+          count: this.kpis.totalVendors,
+          bg: "bg-[#E5F9FF] dark:bg-slate-900	",
+        },
+        {
+          name: shapeLine2,
+          title: "Unpaid vendors",
+          count: this.kpis.totalVendors,
+          bg: "bg-[#E5F9FF] dark:bg-slate-900	",
+        },
+        {
+          name: shapeLine2,
+          title: "Green list vendors",
           count: this.kpis.totalVendors,
           bg: "bg-[#E5F9FF] dark:bg-slate-900	",
         },

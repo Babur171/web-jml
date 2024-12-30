@@ -13,10 +13,10 @@
   </div>
 </template>
 <script>
-import Advanced2 from './table/advanced/Advanced2';
-import apiClients from '@/utils/apiClients';
-import config from '@/config';
-import Profiles from '@/views/profile';
+import Advanced2 from "./table/advanced/Advanced2";
+import apiClients from "@/utils/apiClients";
+import config from "@/config";
+import Profiles from "@/views/profile";
 export default {
   components: {
     Advanced2,
@@ -28,13 +28,13 @@ export default {
       user: null,
       displayProfile: false,
       paginationOptions: { current: 1, perPage: 10, total: 25 },
-      searchText: '',
+      searchText: "",
     };
   },
   mounted() {
     this.getUsers();
     this.timerId = null;
-    this.searchText = '';
+    this.searchText = "";
   },
   methods: {
     pageChanged(paginationOptions) {
@@ -63,7 +63,7 @@ export default {
         config.apiUrl +
         `users?role=vendor&page=${this.paginationOptions.current}&limit=${
           this.paginationOptions.perPage
-        }${searchText ? `&search=${searchText}` : ''}`;
+        }${searchText ? `&search=${searchText}` : ""}`;
       const response = await apiClients.get(url);
       this.users = response.data.users;
       this.paginationOptions.total = response.data.count;
