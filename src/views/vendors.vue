@@ -1,9 +1,10 @@
 <template>
   <div class="space-y-5">
-    <Advanced2
+    <Advanced4
       :rows="users"
       @userProfile="showUserProfile"
       @update="getUsers"
+      @specialVendor="specialUserProfile"
       @pageChanged="pageChanged"
       :paginationOptions="paginationOptions"
       @searchText="search"
@@ -13,13 +14,13 @@
   </div>
 </template>
 <script>
-import Advanced2 from "./table/advanced/Advanced2";
+import Advanced4 from "./table/advanced/Advanced4";
 import apiClients from "@/utils/apiClients";
 import config from "@/config";
 import Profiles from "@/views/profile";
 export default {
   components: {
-    Advanced2,
+    Advanced4,
     Profiles,
   },
   data() {
@@ -42,12 +43,18 @@ export default {
       this.paginationOptions = paginationOptions;
       this.getUsers();
     },
+   
     async showUserProfile(id) {
       const url = config.apiUrl + `users/${id}`;
       const response = await apiClients.get(url);
       this.user = this.users.find((user) => user._id == id);
       this.displayProfile = true;
     },
+    async specialUserProfile(id) {
+      const url = config.apiUrl + `users/vendor/special/${id}`;
+      const response = await apiClients.patch(url);
+    },
+   
     debounce(searchText, delay = 1000) {
       clearTimeout(this.timerId);
       this.timerId = setTimeout(() => {

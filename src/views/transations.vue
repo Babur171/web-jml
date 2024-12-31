@@ -1,9 +1,8 @@
 <template>
   <div class="space-y-5">
-    <Advanced2
+    <Advanced3
       :rows="transactions"
       @userProfile="showUserProfile"
-      @update="getUsers"
       @pageChanged="pageChanged"
       :paginationOptions="paginationOptions"
       @searchText="search"
@@ -17,10 +16,12 @@ import Advanced2 from "./table/advanced/Advanced2";
 import apiClients from "@/utils/apiClients";
 import Profiles from "@/views/profile";
 import config from "@/config";
+import Advanced3 from "./table/advanced/Advanced3.vue";
 export default {
   components: {
     Advanced2,
     Profiles,
+    Advanced3
   },
   data() {
     return {

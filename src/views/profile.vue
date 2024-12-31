@@ -368,7 +368,7 @@
                   class="text-base text-slate-600 dark:text-slate-50"
                 >
                   Lang:
-                  {{ JSON.parse(user?.vendor.location).longitude || "Not Set" }}
+                  {{  user?.vendor?.location?.longitude || "Not Set" }}
                 </a>
               </div>
             </li>
