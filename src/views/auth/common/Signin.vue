@@ -121,7 +121,11 @@ export default {
         setAccessToken(JSON.stringify(response?.data?.tokens?.access));
         setRefreshToken(JSON.stringify(response?.data?.tokens?.refresh));
         setActiveUser(JSON.stringify(response?.data?.user));
-        router.push("/app/home");
+        router.push(
+          response?.data?.user?.role === "vendor"
+            ? "/app/transations"
+            : "/app/home"
+        );
         toast.success(" Login  successfully", {
           timeout: 2000,
         });

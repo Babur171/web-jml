@@ -152,6 +152,13 @@ const routes = [
       },
 
       {
+        path: "transations",
+        name: "transations",
+        component: () => import("@/views/transations.vue"),
+        meta: { roles: ["vendor"] },
+      },
+
+      {
         path: "vendors",
         name: "vendors",
         component: () => import("@/views/vendors.vue"),

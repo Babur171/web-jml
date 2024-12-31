@@ -28,7 +28,9 @@
     </div>
 
     <div class="sidebar-menu px-4 h-[calc(100%-100px)]" data-simplebar>
-      <Navmenu :items="menuItems" />
+      <Navmenu
+        :items="userData.role === 'vendor' ? menuVendorItems : menuItems"
+      />
       <!-- <div
         class="bg-slate-900 mb-[100px] mt-14 p-4 relative text-center rounded-2xl text-white"
         v-if="!this.$store.themeSettingsStore.sidebarCollasp"
@@ -59,7 +61,9 @@
 import { Icon } from "@iconify/vue";
 import { defineComponent } from "vue";
 import { menuItems } from "../../constant/data";
+import { menuVendorItems } from "../../constant/renderData";
 import Navmenu from "./Navmenu";
+import { getActiveUser } from "../../utils/utils.js";
 import { useThemeSettingsStore } from "@/store/themeSettings";
 const themeSettingsStore = useThemeSettingsStore();
 
@@ -71,13 +75,19 @@ export default defineComponent({
   data() {
     return {
       menuItems,
+      menuVendorItems,
       openClass: "w-[248px]",
       closeClass: "w-[72px] close_sidebar",
+      userData: {},
     };
+  },
+  mounted() {
+    const user = JSON.parse(getActiveUser());
+    this.userData = user;
   },
   methods: {
     toggleMsidebar() {
-      themeSettingsStore.toggleMsidebar()
+      themeSettingsStore.toggleMsidebar();
     },
   },
 });

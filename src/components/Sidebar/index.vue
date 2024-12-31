@@ -5,7 +5,11 @@
         this.$store.themeSettingsStore.skin === 'bordered'
           ? 'border-r border-gray-5002 dark:border-slate-700'
           : 'shadow-base'
-      }   ${this.$store.themeSettingsStore.sidebarCollasp ? this.closeClass : this.openClass}
+      }   ${
+        this.$store.themeSettingsStore.sidebarCollasp
+          ? this.closeClass
+          : this.openClass
+      }
       ${this.$store.themeSettingsStore.isMouseHovered ? 'sidebar-hovered' : ''}
       
       `"
@@ -14,7 +18,9 @@
     >
       <div
         :class="`logo-segment flex justify-between items-center bg-white dark:bg-slate-800 z-[9] py-6  sticky top-0   px-4  ${
-          this.$store.themeSettingsStore.sidebarCollasp ? this.closeClass : this.openClass
+          this.$store.themeSettingsStore.sidebarCollasp
+            ? this.closeClass
+            : this.openClass
         } ${
           this.$store.themeSettingsStore.skin === 'bordered'
             ? ' border-b border-r border-gray-5002 dark:border-slate-700'
@@ -34,13 +40,19 @@
           <img
             src="@/assets/images/logo/logo.svg"
             alt=""
-            v-if="!this.$store.themeSettingsStore.isDark && !this.$store.themeSettingsStore.semidark"
+            v-if="
+              !this.$store.themeSettingsStore.isDark &&
+              !this.$store.themeSettingsStore.semidark
+            "
           />
 
           <img
             src="@/assets/images/logo/logo-white.svg"
             alt=""
-            v-if="this.$store.themeSettingsStore.isDark || this.$store.themeSettingsStore.semidark"
+            v-if="
+              this.$store.themeSettingsStore.isDark ||
+              this.$store.themeSettingsStore.semidark
+            "
           />
         </router-link>
         <router-link
@@ -53,12 +65,18 @@
           <img
             src="@/assets/images/logo/logo-c.svg"
             alt=""
-            v-if="!this.$store.themeSettingsStore.isDark && !this.$store.themeSettingsStore.semidark"
+            v-if="
+              !this.$store.themeSettingsStore.isDark &&
+              !this.$store.themeSettingsStore.semidark
+            "
           />
           <img
             src="@/assets/images/logo/logo-c-white.svg"
             alt=""
-            v-if="this.$store.themeSettingsStore.isDark || this.$store.themeSettingsStore.semidark"
+            v-if="
+              this.$store.themeSettingsStore.isDark ||
+              this.$store.themeSettingsStore.semidark
+            "
           />
         </router-link>
         <span
@@ -68,7 +86,8 @@
             this.$store.themeSettingsStore.isMouseHovered
           "
           @click="
-            this.$store.themeSettingsStore.sidebarCollasp = !this.$store.themeSettingsStore.sidebarCollasp
+            this.$store.themeSettingsStore.sidebarCollasp =
+              !this.$store.themeSettingsStore.sidebarCollasp
           "
         >
           <!-- <Icon icon="heroicons-outline:menu-alt-3"
@@ -96,7 +115,9 @@
           }
         "
       >
-        <Navmenu :items="menuItems" />
+        <Navmenu
+          :items="userData.role === 'vendor' ? menuVendorItems : menuItems"
+        />
         <!-- <Transition @enter="enterWidget" @leave="leaveWidget">
           <div
             class="bg-slate-900 mb-10 mt-24 p-4 relative text-center rounded-2xl text-white"
@@ -130,10 +151,12 @@
 // import { Icon } from "@iconify/vue";
 import { defineComponent } from "vue";
 import { menuItems } from "../../constant/data";
+import { menuVendorItems } from "../../constant/renderData";
 import Navmenu from "./Navmenu";
 import { gsap } from "gsap";
 import { SimpleBar } from "simplebar-vue3";
 import { ref, onMounted } from "vue";
+import { getActiveUser } from "../../utils/utils.js";
 
 export default defineComponent({
   components: {
@@ -141,12 +164,19 @@ export default defineComponent({
     Navmenu,
     SimpleBar,
   },
+
   data() {
     return {
       menuItems,
+      menuVendorItems,
       openClass: "w-[248px]",
       closeClass: "w-[72px] close_sidebar",
+      userData: {},
     };
+  },
+  mounted() {
+    const user = JSON.parse(getActiveUser());
+    this.userData = user;
   },
 
   setup() {
