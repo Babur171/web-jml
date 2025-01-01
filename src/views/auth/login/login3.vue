@@ -62,7 +62,6 @@
 <script>
 import Signin from "../common/Signin";
 import Social from "../common/Social";
-// Image Import
 import loginBg from "@/assets/images/all-img/page-bg.png"
 import logoWhite from "@/assets/images/logo/logo-white.svg"
 import logo from "@/assets/images/logo/logo.svg"

@@ -1,4 +1,29 @@
 <template>
+  <div class="flex justify-between mb-4">
+    <button
+      :class="
+        activeTab === 'login'
+          ? 'bg-blue-500 text-white'
+          : 'bg-gray-200 text-gray-600'
+      "
+      class="w-1/2 py-2 rounded-l-md focus:outline-none"
+      @click="toggleTab('login')"
+    >
+      Login
+    </button>
+    <button
+      :class="
+        activeTab === 'signup'
+          ? 'bg-blue-500 text-white'
+          : 'bg-gray-200 text-gray-600'
+      "
+      class="w-1/2 py-2 rounded-r-md focus:outline-none"
+      @click="toggleTab('signup')"
+    >
+      Magic Login
+    </button>
+  </div>
+
   <form @submit.prevent="onSubmit" class="space-y-4">
     <Textinput
       label="Email"
@@ -19,7 +44,16 @@
       hasicon
       classInput="h-[48px]"
     />
-
+    <Textinput
+      v-if="activeTab === 'signup'"
+      label="Vendor Email"
+      type="email"
+      placeholder="Vendor Email"
+      name="email"
+      v-model="memail"
+      :error="mEmailError"
+      classInput="h-[48px]"
+    />
     <div class="flex justify-between">
       <label class="cursor-pointer flex items-start">
         <input
@@ -54,11 +88,12 @@
     </div>
 
     <button type="submit" class="btn btn-dark block w-full text-center">
-      Sign in
+      {{ activeTab === "login" ? "Login" : "Magic Login" }}
     </button>
   </form>
 </template>
 <script>
+import { ref ,watch } from "vue";
 import Textinput from "@/components/Textinput";
 import config from "../../../config";
 import apiClients from "../../../utils/apiClients";
@@ -69,7 +104,6 @@ import {
 } from "../../../utils/utils";
 import { useField, useForm } from "vee-validate";
 import * as yup from "yup";
-
 import { useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 
@@ -77,42 +111,68 @@ export default {
   components: {
     Textinput,
   },
-  data() {
-    return {
-      checkbox: false,
-    };
-  },
   setup() {
-    // Define a validation schema
+    const activeTab = ref("login");
+    const checkbox = ref(false);
+
+    // Validation schema
     const schema = yup.object({
       email: yup.string().required("Email is required").email(),
       password: yup.string().required("Password is required").min(8),
     });
+    const mSchema = yup.object({
+      email: yup.string().required("Email is required").email(),
+      memail: yup.string().required("Email is required").email("Invalid email"),
+      password: yup.string().required("Password is required").min(8),
+    });
+    const currentSchema = ref(schema);
 
     const toast = useToast();
     const router = useRouter();
+
+    watch(activeTab, (newTab) => {
+    currentSchema.value = newTab === "login" ? schema : mSchema;
+  })
 
     const formValues = {
       email: "Ab1@mail.com",
       password: "brand1111",
     };
 
+    const magicFormValues = {
+      email: "magic@jml.com",
+      password: "Magic@123",
+      memail: "brandhhh@mail.com",
+    };
+
     const { handleSubmit } = useForm({
-      validationSchema: schema,
-      initialValues: formValues,
+      validationSchema:currentSchema,
+      initialValues: activeTab.value === "login" ? formValues : magicFormValues,
     });
-    // No need to define rules for fields
 
     const { value: email, errorMessage: emailError } = useField("email");
+    const { value: memail, errorMessage: mEmailError } = useField("memail");
     const { value: password, errorMessage: passwordError } =
       useField("password");
 
     const onSubmit = handleSubmit(async (values) => {
       const url = config.apiUrl + "auth/login";
-      const body = { userId: values.email, password: values.password };
+      const mUrl = config.apiUrl + "auth/magic-login";
+      const data = { userId: values.email, password: values.password };
+      const mNewdata = {
+        email: values.email,
+        password: values.password,
+        vendorEmail: values.memail || "",
+      };
+      const bodyValue = activeTab.value === "login" ? data : mNewdata;
+      const body = bodyValue;
       const hasAuth = false;
 
-      const response = await apiClients.post(url, body, hasAuth);
+      const response = await apiClients.post(
+        activeTab.value === "login" ? url : mUrl,
+        body,
+        hasAuth
+      );
 
       if (
         response?.data?.user?.role === "admin" ||
@@ -126,25 +186,35 @@ export default {
             ? "/app/transations"
             : "/app/home"
         );
-        toast.success(" Login  successfully", {
+        toast.success(" Login successfully", {
           timeout: 2000,
         });
       } else {
-        return toast.error(" Email or Password is incorrect ", {
+        return toast.error(" Email or Password is incorrect", {
           timeout: 2000,
         });
       }
     });
 
-    return {
-      email,
+    const toggleTab = (tab) => {
+      activeTab.value = tab;
+    };
 
+    return {
+      activeTab,
+      checkbox,
+      email,
+      memail,
       emailError,
+      mEmailError,
       password,
       passwordError,
       onSubmit,
+      toggleTab,
     };
   },
+ 
 };
 </script>
+
 <style lang="scss"></style>

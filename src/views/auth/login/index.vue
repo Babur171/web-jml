@@ -97,6 +97,7 @@
 </template>
 <script>
 import Signin from "../common/Signin";
+// import Signin2 from "../common/Signin2.vue";
 import Social from "../common/Social";
 // Image Import
 import logoWhite from "@/assets/images/logo/logo-white.svg"
@@ -111,7 +112,7 @@ export default {
   },
   components: {
     Social,
-    Signin,
+    Signin
   },
 };
 </script>
