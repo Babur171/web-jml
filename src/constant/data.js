@@ -108,6 +108,11 @@ export const menuItems = [
     link: "user-referrals",
   },
   {
+    title: "Users Notifications",
+    icon: "mdi:account-plus", // Updated icon class here
+    link: "user-notification",
+  },
+  {
     title: "App Management",
     icon: "carbon:gui-management",
     link: "app-management",

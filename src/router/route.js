@@ -116,6 +116,14 @@ const routes = [
         },
       },
       {
+        path: "user-notification",
+        name: "user-notification",
+        component: () => import("@/views/userNotifiction.vue"),
+        meta: {
+          hide: true,
+        },
+      },
+      {
         path: "banking",
         name: "banking",
         component: () => import("@/views/home/banking.vue"),

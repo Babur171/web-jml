@@ -31,7 +31,7 @@
         `"
       >
         <router-link
-          :to="{ name: 'home' }"
+          :to="{ name:userData.role === 'vendor' ? 'transations' : 'home' }"
           v-if="
             !this.$store.themeSettingsStore.sidebarCollasp ||
             this.$store.themeSettingsStore.isMouseHovered
@@ -55,8 +55,8 @@
             "
           />
         </router-link>
-        <router-link
-          :to="{ name: 'home' }"
+        <router-link 
+          :to="{ name:userData.role === 'vendor' ? 'transations' : 'home' }"
           v-if="
             this.$store.themeSettingsStore.sidebarCollasp &&
             !this.$store.themeSettingsStore.isMouseHovered

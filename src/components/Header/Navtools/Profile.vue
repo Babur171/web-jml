@@ -49,10 +49,16 @@
 import { MenuItem } from "@headlessui/vue";
 import Dropdown from "@/components/Dropdown";
 import Icon from "@/components/Icon";
-import profileImg from "@/assets/images/all-img/user.png"
-import { getActiveUser, getRefreshToken, removeAccessToken, removeActiveUser, removeRefreshToken } from "../../../utils/utils"
-import apiClients from '@/utils/apiClients';
-import config from '@/config';
+import profileImg from "@/assets/images/all-img/user.png";
+import {
+  getActiveUser,
+  getRefreshToken,
+  removeAccessToken,
+  removeActiveUser,
+  removeRefreshToken,
+} from "../../../utils/utils";
+import apiClients from "@/utils/apiClients";
+import config from "@/config";
 export default {
   components: {
     Icon,
@@ -117,9 +123,11 @@ export default {
           label: "Logout",
           icon: "heroicons-outline:login",
           link: async () => {
-            const url = config.apiUrl + 'auth/logout';
-            await apiClients.post(url, { refreshToken: JSON.parse(getRefreshToken())?.token });
-            removeRefreshToken(); 
+            const url = config.apiUrl + "auth/logout";
+            await apiClients.post(url, {
+              refreshToken: JSON.parse(getRefreshToken())?.token,
+            });
+            removeRefreshToken();
             removeAccessToken();
             removeActiveUser();
             this.$router.push("/");
@@ -131,9 +139,9 @@ export default {
   mounted() {
     const user = JSON.parse(getActiveUser());
     this.userName = user.name;
-    this.profileImg = config.apiUrl + 'users/' + user.id + '/image';
+    this.profileImg = config.apiUrl + "users/" + user.id + "/image";
   },
-  methods:{}
+  methods: {},
 };
 </script>
 <style lang=""></style>
