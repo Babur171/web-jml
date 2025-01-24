@@ -8,10 +8,7 @@
           <div class="auth-box h-full flex flex-col justify-center">
             <div class="mobile-logo text-center mb-6 lg:hidden block">
               <router-link to="/"
-                ><img
-                  :src="logo"
-                  alt=""
-                  class="mx-auto"
+                ><img :src="logo" alt="" class="mx-auto"
               /></router-link>
             </div>
             <div class="text-center 2xl:mb-10 mb-4">
@@ -53,18 +50,13 @@
       <div
         class="left-column bg-cover bg-no-repeat bg-center"
         :style="{
-          backgroundImage:
-            'url(' + loginBg + ')',
+          backgroundImage: 'url(' + loginBg + ')',
         }"
       >
         <div class="flex flex-col h-full justify-center">
           <div class="flex-1 flex flex-col justify-center items-center">
             <router-link to="/">
-              <img
-                :src="logoWhite"
-                alt=""
-                class="mb-10"
-              />
+              <img :src="logoWhite" alt="" class="mb-10" />
             </router-link>
           </div>
           <div>
@@ -84,15 +76,17 @@
 import Signin from "../common/Signin";
 import Social from "../common/Social";
 // Image Import
-import loginBg from "@/assets/images/all-img/login-bg.png"
-import logoWhite from "@/assets/images/logo/logo-white.svg"
-import logo from "@/assets/images/logo/logo.svg"
+import loginBg from "@/assets/images/all-img/login-bg.png";
+import logoWhite from "@/assets/images/logo/logo-white.svg";
+import logo from "@/assets/images/logo/logo.svg";
 
 export default {
-  data () {
+  data() {
     return {
-      logoWhite,logo,loginBg
-    }
+      logoWhite,
+      logo,
+      loginBg,
+    };
   },
   components: {
     Social,

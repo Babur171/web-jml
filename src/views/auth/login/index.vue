@@ -10,12 +10,7 @@
               class="mb-10"
               v-if="!this.$store.themeSettingsStore.isDark"
             />
-            <img
-              :src="logoWhite"
-              alt=""
-              class="mb-10"
-              v-else
-            />
+            <img :src="logoWhite" alt="" class="mb-10" v-else />
           </router-link>
 
           <h4>
@@ -28,11 +23,7 @@
         <div
           class="absolute left-0 2xl:bottom-[-160px] bottom-[-130px] h-full w-full z-[-1]"
         >
-          <img
-            :src="sideImg"
-            alt=""
-            class="h-full w-full object-contain"
-          />
+          <img :src="sideImg" alt="" class="h-full w-full object-contain" />
         </div>
       </div>
       <div class="right-column relative">
@@ -48,12 +39,7 @@
                   class="mx-auto"
                   v-if="!this.$store.themeSettingsStore.isDark"
                 />
-                <img
-                  :src="logoWhite"
-                  alt=""
-                  class="mx-auto"
-                  v-else
-                />
+                <img :src="logoWhite" alt="" class="mx-auto" v-else />
               </router-link>
             </div>
             <div class="text-center 2xl:mb-10 mb-4">
@@ -100,19 +86,21 @@ import Signin from "../common/Signin";
 // import Signin2 from "../common/Signin2.vue";
 import Social from "../common/Social";
 // Image Import
-import logoWhite from "@/assets/images/logo/logo-white.svg"
-import logo from "@/assets/images/logo/logo.svg"
-import sideImg from "@/assets/images/auth/ils1.svg"
+import logoWhite from "@/assets/images/logo/logo-white.svg";
+import logo from "@/assets/images/logo/logo.svg";
+import sideImg from "@/assets/images/auth/ils1.svg";
 
 export default {
-  data () {
+  data() {
     return {
-      logoWhite,logo,sideImg
-    }
+      logoWhite,
+      logo,
+      sideImg,
+    };
   },
   components: {
     Social,
-    Signin
+    Signin,
   },
 };
 </script>

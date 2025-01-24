@@ -93,7 +93,7 @@
   </form>
 </template>
 <script>
-import { ref ,watch } from "vue";
+import { ref, watch } from "vue";
 import Textinput from "@/components/Textinput";
 import config from "../../../config";
 import apiClients from "../../../utils/apiClients";
@@ -131,8 +131,8 @@ export default {
     const router = useRouter();
 
     watch(activeTab, (newTab) => {
-    currentSchema.value = newTab === "login" ? schema : mSchema;
-  })
+      currentSchema.value = newTab === "login" ? schema : mSchema;
+    });
 
     const formValues = {
       email: "Ab1@mail.com",
@@ -146,7 +146,7 @@ export default {
     };
 
     const { handleSubmit } = useForm({
-      validationSchema:currentSchema,
+      validationSchema: currentSchema,
       initialValues: activeTab.value === "login" ? formValues : magicFormValues,
     });
 
@@ -213,7 +213,6 @@ export default {
       toggleTab,
     };
   },
- 
 };
 </script>
 

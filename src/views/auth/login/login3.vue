@@ -2,8 +2,7 @@
   <div
     class="loginwrapper bg-cover bg-no-repeat bg-center"
     :style="{
-      backgroundImage:
-        'url(' + loginBg + ')',
+      backgroundImage: 'url(' + loginBg + ')',
     }"
   >
     <div class="lg-inner-column">
@@ -62,15 +61,17 @@
 <script>
 import Signin from "../common/Signin";
 import Social from "../common/Social";
-import loginBg from "@/assets/images/all-img/page-bg.png"
-import logoWhite from "@/assets/images/logo/logo-white.svg"
-import logo from "@/assets/images/logo/logo.svg"
+import loginBg from "@/assets/images/all-img/page-bg.png";
+import logoWhite from "@/assets/images/logo/logo-white.svg";
+import logo from "@/assets/images/logo/logo.svg";
 
 export default {
-  data () {
+  data() {
     return {
-      logoWhite,logo,loginBg
-    }
+      logoWhite,
+      logo,
+      loginBg,
+    };
   },
   components: {
     Social,

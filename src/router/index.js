@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import middlewarePipeline from "../middleware/middlewarePipeline";
-import routes from './route';
-
+import routes from "./route";
 
 const router = createRouter({
   history: createWebHistory(import.meta.BASE_URL),
@@ -26,15 +25,15 @@ router.beforeEach((to, from, next) => {
 
   /** Navigate to next if middleware is not applied */
   if (!to.meta.middleware) {
-    return next()
+    return next();
   }
 
   const middleware = to.meta.middleware;
-  const context = { to, from, next }
+  const context = { to, from, next };
   return middleware[0]({
     ...context,
-    next: middlewarePipeline(context, middleware, 1)
-  })
+    next: middlewarePipeline(context, middleware, 1),
+  });
 });
 
 router.afterEach(() => {

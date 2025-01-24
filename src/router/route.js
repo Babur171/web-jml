@@ -1,5 +1,4 @@
 import auth from "@/middleware/auth";
-import guest from "@/middleware/guest";
 
 const routes = [
   {
@@ -163,7 +162,7 @@ const routes = [
         path: "transations",
         name: "transations",
         component: () => import("@/views/transations.vue"),
-        meta: { roles: ["vendor"] },
+        meta: { roles: "vendor" },
       },
 
       {
